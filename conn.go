@@ -88,6 +88,11 @@ func (l *Conn) start() {
 	go l.processMessages()
 }
 
+// Returns whether the connection is closed
+func (l *Conn) IsClosed() bool {
+	return l.conn == nil
+}
+
 // Close closes the connection.
 func (l *Conn) Close() *Error {
 	l.closeLock.Lock()
