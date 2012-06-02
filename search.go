@@ -172,14 +172,14 @@ func (l *Conn) Search(SearchRequest *SearchRequest) (*SearchResult, *Error) {
 	messageID := l.nextMessageID()
 
 	packet := ber.Encode(ber.ClassUniversal, ber.TypeConstructed, ber.TagSequence, nil, "LDAP Request")
-	packet.AppendChild(ber.NewInteger(ber.ClassUniversal, ber.TypePrimative, ber.TagInteger, messageID, "MessageID"))
+	packet.AppendChild(ber.NewInteger(ber.ClassUniversal, ber.TypePrimitive, ber.TagInteger, messageID, "MessageID"))
 	searchRequest := ber.Encode(ber.ClassApplication, ber.TypeConstructed, ApplicationSearchRequest, nil, "Search Request")
-	searchRequest.AppendChild(ber.NewString(ber.ClassUniversal, ber.TypePrimative, ber.TagOctetString, SearchRequest.BaseDN, "Base DN"))
-	searchRequest.AppendChild(ber.NewInteger(ber.ClassUniversal, ber.TypePrimative, ber.TagEnumerated, uint64(SearchRequest.Scope), "Scope"))
-	searchRequest.AppendChild(ber.NewInteger(ber.ClassUniversal, ber.TypePrimative, ber.TagEnumerated, uint64(SearchRequest.DerefAliases), "Deref Aliases"))
-	searchRequest.AppendChild(ber.NewInteger(ber.ClassUniversal, ber.TypePrimative, ber.TagInteger, uint64(SearchRequest.SizeLimit), "Size Limit"))
-	searchRequest.AppendChild(ber.NewInteger(ber.ClassUniversal, ber.TypePrimative, ber.TagInteger, uint64(SearchRequest.TimeLimit), "Time Limit"))
-	searchRequest.AppendChild(ber.NewBoolean(ber.ClassUniversal, ber.TypePrimative, ber.TagBoolean, SearchRequest.TypesOnly, "Types Only"))
+	searchRequest.AppendChild(ber.NewString(ber.ClassUniversal, ber.TypePrimitive, ber.TagOctetString, SearchRequest.BaseDN, "Base DN"))
+	searchRequest.AppendChild(ber.NewInteger(ber.ClassUniversal, ber.TypePrimitive, ber.TagEnumerated, uint64(SearchRequest.Scope), "Scope"))
+	searchRequest.AppendChild(ber.NewInteger(ber.ClassUniversal, ber.TypePrimitive, ber.TagEnumerated, uint64(SearchRequest.DerefAliases), "Deref Aliases"))
+	searchRequest.AppendChild(ber.NewInteger(ber.ClassUniversal, ber.TypePrimitive, ber.TagInteger, uint64(SearchRequest.SizeLimit), "Size Limit"))
+	searchRequest.AppendChild(ber.NewInteger(ber.ClassUniversal, ber.TypePrimitive, ber.TagInteger, uint64(SearchRequest.TimeLimit), "Time Limit"))
+	searchRequest.AppendChild(ber.NewBoolean(ber.ClassUniversal, ber.TypePrimitive, ber.TagBoolean, SearchRequest.TypesOnly, "Types Only"))
 	filterPacket, err := CompileFilter(SearchRequest.Filter)
 	if err != nil {
 		return nil, err
@@ -187,7 +187,7 @@ func (l *Conn) Search(SearchRequest *SearchRequest) (*SearchResult, *Error) {
 	searchRequest.AppendChild(filterPacket)
 	attributesPacket := ber.Encode(ber.ClassUniversal, ber.TypeConstructed, ber.TagSequence, nil, "Attributes")
 	for _, attribute := range SearchRequest.Attributes {
-		attributesPacket.AppendChild(ber.NewString(ber.ClassUniversal, ber.TypePrimative, ber.TagOctetString, attribute, "Attribute"))
+		attributesPacket.AppendChild(ber.NewString(ber.ClassUniversal, ber.TypePrimitive, ber.TagOctetString, attribute, "Attribute"))
 	}
 	searchRequest.AppendChild(attributesPacket)
 	packet.AppendChild(searchRequest)

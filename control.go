@@ -36,11 +36,11 @@ func (c *ControlString) GetControlType() string {
 
 func (c *ControlString) Encode() (p *ber.Packet) {
    p = ber.Encode( ber.ClassUniversal, ber.TypeConstructed, ber.TagSequence, nil, "Control" )
-   p.AppendChild( ber.NewString( ber.ClassUniversal, ber.TypePrimative, ber.TagOctetString, c.ControlType, "Control Type (" + ControlTypeMap[ c.ControlType ] + ")" ) )
+   p.AppendChild( ber.NewString( ber.ClassUniversal, ber.TypePrimitive, ber.TagOctetString, c.ControlType, "Control Type (" + ControlTypeMap[ c.ControlType ] + ")" ) )
    if c.Criticality {
-      p.AppendChild( ber.NewBoolean( ber.ClassUniversal, ber.TypePrimative, ber.TagBoolean, c.Criticality, "Criticality" ) )
+      p.AppendChild( ber.NewBoolean( ber.ClassUniversal, ber.TypePrimitive, ber.TagBoolean, c.Criticality, "Criticality" ) )
    }
-   p.AppendChild( ber.NewString( ber.ClassUniversal, ber.TypePrimative, ber.TagOctetString, c.ControlValue, "Control Value" ) )
+   p.AppendChild( ber.NewString( ber.ClassUniversal, ber.TypePrimitive, ber.TagOctetString, c.ControlValue, "Control Value" ) )
    return
 }
 
@@ -59,12 +59,12 @@ func (c *ControlPaging) GetControlType() string {
 
 func (c *ControlPaging) Encode() (p *ber.Packet) {
    p = ber.Encode( ber.ClassUniversal, ber.TypeConstructed, ber.TagSequence, nil, "Control" )
-   p.AppendChild( ber.NewString( ber.ClassUniversal, ber.TypePrimative, ber.TagOctetString, ControlTypePaging, "Control Type (" + ControlTypeMap[ ControlTypePaging ] + ")" ) )
+   p.AppendChild( ber.NewString( ber.ClassUniversal, ber.TypePrimitive, ber.TagOctetString, ControlTypePaging, "Control Type (" + ControlTypeMap[ ControlTypePaging ] + ")" ) )
 
-   p2 := ber.Encode( ber.ClassUniversal, ber.TypePrimative, ber.TagOctetString, nil, "Control Value (Paging)" )
+   p2 := ber.Encode( ber.ClassUniversal, ber.TypePrimitive, ber.TagOctetString, nil, "Control Value (Paging)" )
    seq := ber.Encode( ber.ClassUniversal, ber.TypeConstructed, ber.TagSequence, nil, "Search Control Value" )
-   seq.AppendChild( ber.NewInteger( ber.ClassUniversal, ber.TypePrimative, ber.TagInteger, uint64(c.PagingSize), "Paging Size" ) )
-   cookie := ber.Encode( ber.ClassUniversal, ber.TypePrimative, ber.TagOctetString, nil, "Cookie" )
+   seq.AppendChild( ber.NewInteger( ber.ClassUniversal, ber.TypePrimitive, ber.TagInteger, uint64(c.PagingSize), "Paging Size" ) )
+   cookie := ber.Encode( ber.ClassUniversal, ber.TypePrimitive, ber.TagOctetString, nil, "Cookie" )
    cookie.Value = c.Cookie
    cookie.Data.Write( c.Cookie )
    seq.AppendChild( cookie )
